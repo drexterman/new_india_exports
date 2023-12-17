@@ -27,7 +27,7 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Color.fromARGB(255, 236, 231, 223),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

@@ -43,46 +43,67 @@ class Home extends StatelessWidget {
           )
         ],
       ),
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      body: SingleChildScrollView(
-        child: Column(
-        
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-              // desktop1s31 (4:124)
-              
-              width:  double.infinity,
-              
-              decoration:  BoxDecoration (
-                gradient:  RadialGradient (
-                  center:  Alignment(-0.626, 0.2),
-                  radius:  0.7,
-                  colors:  <Color>[Color(0xff22ceaf), Color(0xff1b413a)],
-                  stops:  <double>[0, 0.741],
-                ),
-              ),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                "Welcome ",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              
-              Text(
-                _boxLogin.get("userName"),
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-                Text(
-                " !",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-                ],
-              ),
-              Image.asset('assets/Logo.png'),
-            ],
+      backgroundColor: Color.fromARGB(255, 236, 231, 223),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          /*Image.asset(
+            'assets/background.jpg', // Replace with your image path
+            fit: BoxFit.cover,
           ),
+          // Semi-transparent Overlay
+          Container(
+            color: Colors.black.withOpacity(0.6), // Adjust opacity as needed
+          ),*/
+          // Main Content
+
+        SingleChildScrollView(
+                    child: Column(
+            
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+        
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                    "Welcome ",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 27, 29, 29),
+                      fontSize: 30,
+
+                    ),
+                  ),
+                  
+                  Text(
+                    _boxLogin.get("userName"),
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 27, 29, 29),
+                      fontSize: 30,
+                    ),
+                  ),
+                    Text(
+                    " !",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 27, 29, 29),
+                      fontSize: 30,
+                    ),
+                  ),
+                    ],
+                  ),
+                  Image.asset('assets/Logo.png'),
+                  SizedBox(height: 30, width:30),
+                  Text("Connecting farmers to you: Uncompromised Quality, Directly Delivered.",
+                  style:TextStyle(
+                    color: Color.fromARGB(255, 123, 104, 93),
+                    fontSize: 20,
+                  ),
+                  ),
+                ],
+                
+              ),
+        ),
+        ],
       ),
       );
     

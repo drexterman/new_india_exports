@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:login_flutter/ui/FruitsVegetablesPage.dart';
 import 'package:login_flutter/ui/CerealsPulsesPage.dart';
 import 'package:login_flutter/ui/OrganicFoodPage.dart';
 import 'package:login_flutter/ui/OthersPage.dart';
+import 'package:login_flutter/ui/spices.dart';
 import 'package:login_flutter/ui/navbar.dart';
 
 
@@ -11,8 +13,10 @@ class ProductCategoriesGrid extends StatelessWidget {
     'Fruits & Vegetables',
     'Cereals & Pulses',
     'Organic Foods',
-    'Others'
+    'Others',
+    'Spices',
   ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,50 @@ class ProductCategoriesGrid extends StatelessWidget {
               categoryIndex: index + 1,
               categoryName: categoryNames[index]); // Index starts from 0
         },
+      ),
+      floatingActionButton: Stack(
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => GoogleFormWebView()),// Functionality for the FAB button
+              );
+            },
+            backgroundColor: Colors.blue, // Background color for the FAB
+            child: Icon(Icons.question_mark_sharp), // Icon for the FAB
+          ),
+          Positioned.fill(
+            child: Container(
+              //mainAxisAlignment: MainAxisAlignment.start,
+              alignment: Alignment.bottomCenter,
+              padding: EdgeInsets.only(bottom: 3),
+              child: Text(
+                'ENQUIRY', // Your text here
+                style: TextStyle(
+                  color: Colors.white, // Text color
+                  fontWeight: FontWeight.bold, // Text weight
+                  fontSize: 8,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GoogleFormWebView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Google Form'),
+      ),
+      body: WebView(
+        initialUrl: 'https://www.newindiaexport.com/home',
+        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }
@@ -73,7 +121,12 @@ class CategoryTile extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => OthersPage()),
     );
-  } 
+  }  else if (categoryName == 'Spices') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => spicesPage()),
+    );
+  }
   
 },
 
