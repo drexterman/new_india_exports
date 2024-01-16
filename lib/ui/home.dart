@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+//import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_flutter/ui/navbar.dart';
-
+//import 'package:flutter_animate/flutter_animate.dart';
 import 'login.dart';
+//import 'package:video_player/video_player.dart';
+//import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
 
-  final Box _boxLogin = Hive.box("login");
+  //final Box _boxLogin = Hive.box("login");
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +29,7 @@ class Home extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
-                  _boxLogin.clear();
-                  _boxLogin.put("loginStatus", false);
+                  FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -36,6 +38,16 @@ class Home extends StatelessWidget {
                       },
                     ),
                   );
+                 /* _boxLogin.clear();
+                  _boxLogin.put("loginStatus", false);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const Login();
+                      },
+                    ),
+                  );*/
                 },
                 icon: const Icon(Icons.logout_rounded),
               ),
@@ -75,13 +87,14 @@ class Home extends StatelessWidget {
                     ),
                   ),
                   
-                  Text(
-                    _boxLogin.get("userName"),
+                  /*Text(
+                    //_boxLogin.get("userName"),
+                    "User",
                     style: TextStyle(
                       color: Color.fromARGB(255, 27, 29, 29),
                       fontSize: 30,
                     ),
-                  ),
+                  ),*/
                     Text(
                     " !",
                     style: TextStyle(
@@ -91,7 +104,9 @@ class Home extends StatelessWidget {
                   ),
                     ],
                   ),
-                  Image.asset('assets/Logo.png'),
+
+                    Image.asset("assets/Logo.png"),
+                    
                   SizedBox(height: 30, width:30),
                   Text("Connecting farmers to you: Uncompromised Quality, Directly Delivered.",
                   style:TextStyle(

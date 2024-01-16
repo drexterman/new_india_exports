@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030809240540",
+    "project_id": "newindiaexports-bb3af",
+    "storage_bucket": "newindiaexports-bb3af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030809240540:android:804450b8ec674d49f88519",
+        "android_client_info": {
+          "package_name": "com.login.login_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF6FhLIV9hZ4BcmWyBO9kBtIPoqlVTqJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -77,7 +77,7 @@ class _introState extends State<intro> {
                 fontFamily: 'ReadexPro-SemiBold',
                 fontSize: 20,
                 color: Color.fromARGB(255,229, 114, 38))),
-        dotsDecorator: DotsDecorator(  //this is used to design the dots at bottom of the page which indicates which page you are on
+        dotsDecorator: DotsDecorator(   //this is used to design the dots at bottom of the page which indicates which page you are on
             size: const Size.square(10.0),
             activeSize: const Size(20.0, 10.0),
             activeColor: Color.fromARGB(255, 229, 114, 38),

@@ -6,9 +6,15 @@ import 'package:login_flutter/ui/OrganicFoodPage.dart';
 import 'package:login_flutter/ui/OthersPage.dart';
 import 'package:login_flutter/ui/spices.dart';
 import 'package:login_flutter/ui/navbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-
+//in my navbar.dart when you click on products the function below gets called
+//this function returns a scaffold widget which has a navbar at top left , an AppBar which with product categories written , a body which 
+//calls class CategoryTiles to make tiles of the given no. of products and a floating action button which  open whatsapp dm onTap.
 class ProductCategoriesGrid extends StatelessWidget {
+  // Merchant's WhatsApp number
+  final String merchantNumber = '+917738012421'; // Replace with the merchant's phone number
+
   final List<String> categoryNames = [
     'Fruits & Vegetables',
     'Cereals & Pulses',
@@ -23,6 +29,7 @@ class ProductCategoriesGrid extends StatelessWidget {
     return Scaffold(
       drawer: Navbar(),
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Center(
           child: Text(
             'Product Categories',
@@ -44,11 +51,8 @@ class ProductCategoriesGrid extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: () {
-              Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => GoogleFormWebView()),// Functionality for the FAB button
-              );
-            },
+          _openWhatsAppChat(merchantNumber);
+        },
             backgroundColor: Colors.blue, // Background color for the FAB
             child: Icon(Icons.question_mark_sharp), // Icon for the FAB
           ),
@@ -71,7 +75,20 @@ class ProductCategoriesGrid extends StatelessWidget {
       ),
     );
   }
+
+    // Function to open WhatsApp chat
+  void _openWhatsAppChat(String phoneNumber) async {
+    String message = 'Hello I would like to place an order'; // Optional: You can include a predefined message here
+
+    // Construct the WhatsApp URL with the merchant's phone number and optional message
+    //String url = 'https://api.whatsapp.com/send?phone=$phoneNumber';
+    final Uri _url = Uri.parse('https://wa.me/$phoneNumber/?text=${Uri.encodeFull(message)}');
+    if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
+  }
+  }
 }
+
 
 class GoogleFormWebView extends StatelessWidget {
   @override
@@ -87,6 +104,8 @@ class GoogleFormWebView extends StatelessWidget {
     );
   }
 }
+
+
 
 class CategoryTile extends StatelessWidget {
   final int categoryIndex;

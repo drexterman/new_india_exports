@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:login_flutter/Authentication/user_auth.dart';
+import 'package:login_flutter/ui/home.dart';
+//import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_flutter/ui/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -11,16 +14,26 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-
-  final FocusNode _focusNodeEmail = FocusNode();
-  final FocusNode _focusNodePassword = FocusNode();
-  final FocusNode _focusNodeConfirmPassword = FocusNode();
+  bool _isSigningUp = false ;
+  final FirebaseAuthService _auth=FirebaseAuthService();
+  //final FocusNode _focusNodeEmail = FocusNode();
+  //final FocusNode _focusNodePassword = FocusNode();
+  //final FocusNode _focusNodeConfirmPassword = FocusNode();
   final TextEditingController _controllerUsername = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerConFirmPassword =TextEditingController();
-
-  final Box _boxAccounts = Hive.box("accounts");
+  void dispose() {
+    //_focusNodeEmail.dispose();
+    //_focusNodePassword.dispose();
+    //_focusNodeConfirmPassword.dispose();
+    _controllerUsername.dispose();
+    _controllerEmail.dispose();
+    _controllerPassword.dispose();
+    _controllerConFirmPassword.dispose();
+    super.dispose();
+  }
+  //final Box _boxAccounts = Hive.box("accounts");
   bool _obscurePassword = true;  //used to hide password
   bool __obscurePassword = true;
 
@@ -62,18 +75,18 @@ class _SignupState extends State<Signup> {
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter username.";
-                  } else if (_boxAccounts.containsKey(value)) {
+                  } /*else if (_boxAccounts.containsKey(value)) {
                     return "Username is already registered.";
-                  }
+                  }*/
 
                   return null;
                 },
-                onEditingComplete: () => _focusNodeEmail.requestFocus(),
+                //onEditingComplete: () => _focusNodeEmail.requestFocus(),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: _controllerEmail,
-                focusNode: _focusNodeEmail,
+                //focusNode: _focusNodeEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: "Email",
@@ -93,13 +106,13 @@ class _SignupState extends State<Signup> {
                   }
                   return null;
                 },
-                onEditingComplete: () => _focusNodePassword.requestFocus(),
+                //onEditingComplete: () => _focusNodePassword.requestFocus(),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: _controllerPassword,
                 obscureText: _obscurePassword,
-                focusNode: _focusNodePassword,
+                //focusNode: _focusNodePassword,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   labelText: "Password",
@@ -128,14 +141,13 @@ class _SignupState extends State<Signup> {
                   }
                   return null;
                 },
-                onEditingComplete: () =>
-                    _focusNodeConfirmPassword.requestFocus(),
+                //onEditingComplete: () =>_focusNodeConfirmPassword.requestFocus(),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: _controllerConFirmPassword,
                 obscureText: __obscurePassword,
-                focusNode: _focusNodeConfirmPassword,
+                //focusNode: _focusNodeConfirmPassword,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   labelText: "Confirm Password",
@@ -177,10 +189,11 @@ class _SignupState extends State<Signup> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
-                        _boxAccounts.put(
+                        _signup();
+                        /*_boxAccounts.put(
                           _controllerUsername.text,
                           _controllerConFirmPassword.text,
-                        );
+                        );*/
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -197,7 +210,14 @@ class _SignupState extends State<Signup> {
 
                         _formKey.currentState?.reset();
 
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return  Home();
+                              },
+                            ),
+                          );
                       }
                     },
 
@@ -210,7 +230,7 @@ class _SignupState extends State<Signup> {
                     //         },
                     //       ),
                     //     );
-                    child: const Text("Register"),
+                    child: _isSigningUp? CircularProgressIndicator(color: Colors.white,): Text("Register"),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -233,15 +253,25 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  @override
-  void dispose() {
-    _focusNodeEmail.dispose();
-    _focusNodePassword.dispose();
-    _focusNodeConfirmPassword.dispose();
-    _controllerUsername.dispose();
-    _controllerEmail.dispose();
-    _controllerPassword.dispose();
-    _controllerConFirmPassword.dispose();
-    super.dispose();
+void _signup() async{
+  //String username=_controllerUsername.text;
+  setState(() {
+    _isSigningUp=true;
+  });
+  String password= _controllerConFirmPassword.text;
+  String email= _controllerEmail.text;
+
+  User? user=await _auth.signUpWithEmailAndPassword(email, password);
+  setState(() {
+    _isSigningUp=false;
+  });
+  if (user!=null){
+    print("User is successfully created");
+    Navigator.push(context,MaterialPageRoute(builder: (context){return Home();}));
   }
+  else{
+    print("Some error");
+  }
+}
+
 }

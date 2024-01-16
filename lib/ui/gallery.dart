@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
-
+import 'package:login_flutter/ui/navbar.dart';
 class Gallery extends StatelessWidget {
  
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -14,10 +14,19 @@ class Gallery extends StatelessWidget {
 
 
     return Scaffold(
-      appBar: PreferredSize(
+      drawer: Navbar(),
+      /*appBar: PreferredSize(
     preferredSize: const Size.fromHeight(30),
     child: Container(color: Colors.blue ,),
-  ),
+  ),*/
+  appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Text(
+            'Gallery',
+          ),
+        ),
+      ),
       body:Swiper(
         itemHeight: 400,
         itemWidth: 400,

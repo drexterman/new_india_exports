@@ -1,8 +1,9 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
+//import 'package:hive_flutter/hive_flutter.dart';
+import 'package:login_flutter/Authentication/user_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'home.dart';
 import 'signup.dart';
 
@@ -17,20 +18,29 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-
+  bool _isSigningIn=false ;
   final FocusNode _focusNodePassword = FocusNode();
-  final TextEditingController _controllerUsername = TextEditingController();
+  final FirebaseAuthService _auth= FirebaseAuthService();
+  final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
+  @override
+  void dispose() {
+    _focusNodePassword.dispose();
+    _controllerEmail.dispose();
+    _controllerPassword.dispose();
+    super.dispose();
+  }
+
   bool _obscurePassword = true;
-  final Box _boxLogin = Hive.box("login");
-  final Box _boxAccounts = Hive.box("accounts");
+  //final Box _boxLogin = Hive.box("login");
+  //final Box _boxAccounts = Hive.box("accounts");
 
   @override
   Widget build(BuildContext context) {
-    if (_boxLogin.get("loginStatus") ?? false) {
+    /*if (_boxLogin.get("loginStatus") ?? false) {
       return Home();
-    }
+    }*/
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 236, 231, 223),
@@ -53,11 +63,11 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 60),
               TextFormField(
-                controller: _controllerUsername,
+                controller: _controllerEmail,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
-                  labelText: "Username",
-                  prefixIcon: const Icon(Icons.person_outline),
+                  labelText: "Email",
+                  prefixIcon: const Icon(Icons.email_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -65,14 +75,13 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onEditingComplete: () => _focusNodePassword.requestFocus(),
+                //onEditingComplete: () => _focusNodePassword.requestFocus(),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter username.";
-                  } else if (!_boxAccounts.containsKey(value)) {
-                    return "Username is not registered.";
+                    return "Please enter email.";
+                  } else if (!(value.contains('@') && value.contains('.'))) {
+                    return "Invalid email";
                   }
-
                   return null;
                 },
               ),
@@ -104,10 +113,10 @@ class _LoginState extends State<Login> {
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter password.";
-                  } else if (value !=
+                  } /*else if (value !=
                       _boxAccounts.get(_controllerUsername.text)) {
                     return "Wrong password.";
-                  }
+                  }*/
 
                   return null;
                 },
@@ -123,7 +132,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
+                      _signIn();
+                      /*if (_formKey.currentState?.validate() ?? false) {
                         _boxLogin.put("loginStatus", true);
                         _boxLogin.put("userName", _controllerUsername.text);
 
@@ -135,9 +145,9 @@ class _LoginState extends State<Login> {
                             },
                           ),
                         );
-                      }
+                      }*/
                     },
-                    child: const Text("Login"),
+                    child: _isSigningIn? CircularProgressIndicator(color: Colors.white,): Text("Login"),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -169,11 +179,27 @@ class _LoginState extends State<Login> {
     );
   }
 
-  @override
-  void dispose() {
-    _focusNodePassword.dispose();
-    _controllerUsername.dispose();
-    _controllerPassword.dispose();
-    super.dispose();
+void _signIn() async{
+
+  setState((){
+    _isSigningIn=true ;
+  });
+
+  String password= _controllerPassword.text;
+  String email= _controllerEmail.text;
+
+  User? user = await _auth.signInWithEmailAndPassword(email, password);
+  setState((){
+    _isSigningIn=false ;
+  });
+
+  if (user!=null){
+    print("User is successfully Signed in");
+    Navigator.push(context,MaterialPageRoute(builder: (context){return Home();}));
   }
+  else{
+    print("Some error");
+  }
+}
+
 }
