@@ -1,12 +1,12 @@
-# Login App
+# New India Exports
 
-A Login model app made in flutter.
+The main purpose of this app is to create a link between retailers and bulk exporters enabling a international bridge of imports and exports
 
 ## Features
 
-- Register Account
-- Account validation
-- Save accounts
+- Register Account / Login
+- View the detailed catalog of products 
+- Give quotes / connect with us
 
 ## Screenshots
 
