@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_flutter/Authentication/user_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
 import 'signup.dart';
 
@@ -132,6 +133,10 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onPressed: () {
+                      String token =  "example_token";
+
+                      // Save the token to shared preferences
+                      saveUserSession(token);
                       _signIn();
                       /*if (_formKey.currentState?.validate() ?? false) {
                         _boxLogin.put("loginStatus", true);
@@ -179,6 +184,8 @@ class _LoginState extends State<Login> {
     );
   }
 
+
+
 void _signIn() async{
 
   setState((){
@@ -201,5 +208,10 @@ void _signIn() async{
     print("Some error");
   }
 }
+
+  Future<void> saveUserSession(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userToken', token);
+  }
 
 }

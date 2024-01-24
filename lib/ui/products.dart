@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
 import 'package:login_flutter/ui/FruitsVegetablesPage.dart';
 import 'package:login_flutter/ui/CerealsPulsesPage.dart';
 import 'package:login_flutter/ui/OrganicFoodPage.dart';
@@ -51,7 +51,9 @@ class ProductCategoriesGrid extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: () {
+              //GoogleFormWebView();
           _openWhatsAppChat(merchantNumber);
+
         },
             backgroundColor: Colors.blue, // Background color for the FAB
             child: Icon(Icons.question_mark_sharp), // Icon for the FAB
@@ -89,7 +91,8 @@ class ProductCategoriesGrid extends StatelessWidget {
   }
 }
 
-
+//uncomment the below code if you want to open a google form on tapping on enquiry button  
+/*
 class GoogleFormWebView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -104,7 +107,7 @@ class GoogleFormWebView extends StatelessWidget {
     );
   }
 }
-
+*/
 
 
 class CategoryTile extends StatelessWidget {

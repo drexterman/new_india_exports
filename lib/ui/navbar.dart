@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_flutter/ui/UploadVideo.dart';
 import 'package:login_flutter/ui/gallery.dart';
 import 'package:login_flutter/ui/home.dart';
 import 'package:login_flutter/ui/products.dart';
@@ -75,6 +76,21 @@ class Navbar extends StatelessWidget {
               leading: Icon(Icons.info),
               title: Text('About Us'),
               onTap: () {},
+            ),
+            ListTile(
+              
+              leading: Icon(Icons.video_settings_rounded),
+              title: Text('Upload Videos'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return VideoUploadPage() ;
+                      },
+                    ),
+                  );
+              },
             )
 
           ],
