@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_flutter/Authentication/user_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:login_flutter/ui/forgot_password.dart';
 import 'home.dart';
 import 'signup.dart';
 
@@ -49,8 +50,8 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(30.0),
           child: Column(
+            
             children: [
-
               Image.asset('assets/Logo.png'),
               Text(
                 "Welcome back",
@@ -63,6 +64,7 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 60),
               TextFormField(
+                
                 controller: _controllerEmail,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
@@ -121,7 +123,23 @@ class _LoginState extends State<Login> {
                   return null;
                 },
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 10),
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(child: Text('Forgot Password' , style: TextStyle(color: Color.fromARGB(255, 28, 77, 161) , fontWeight: FontWeight.bold) , ), 
+                  onTap: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  ForgotPasswordScreen()),
+                  );
+                  },
+                  )
+                ],
+              
+              ),
+              const SizedBox(height: 20),
               Column(
                 children: [
                   ElevatedButton(
