@@ -11,8 +11,7 @@ class Gallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-
-
+    
     return Scaffold(
       drawer: Navbar(),
       /*appBar: PreferredSize(

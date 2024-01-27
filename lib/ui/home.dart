@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 //import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_flutter/ui/navbar.dart';
 //import 'package:flutter_animate/flutter_animate.dart';
@@ -9,6 +12,7 @@ import 'login.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   //final Box _boxLogin = Hive.box("login");
 
@@ -38,7 +42,7 @@ class Home extends StatelessWidget {
                       },
                     ),
                   );
-                 /* _boxLogin.clear();
+                  /* _boxLogin.clear();
                   _boxLogin.put("loginStatus", false);
                   Navigator.pushReplacement(
                     context,
@@ -69,58 +73,66 @@ class Home extends StatelessWidget {
           ),*/
           // Main Content
 
-        SingleChildScrollView(
-                    child: Column(
-            
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-        
+                  Padding(padding: EdgeInsets.all(30)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                    "Welcome ",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 27, 29, 29),
-                      fontSize: 30,
-
-                    ),
-                  ),
-                  
-                  /*Text(
-                    //_boxLogin.get("userName"),
-                    "User",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 27, 29, 29),
-                      fontSize: 30,
-                    ),
-                  ),*/
-                    Text(
-                    " !",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 27, 29, 29),
-                      fontSize: 30,
-                    ),
-                  ),
+                        "Welcome ",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 27, 29, 29),
+                          fontSize: 30,
+                        ),
+                      ).animate(
+                        effects: [FadeEffect(), SlideEffect()],
+                      ).slideY(curve: Curves.easeIn),
+                      // Text(
+                      //   auth.currentUser,
+                      //   "User",
+                      //   style: TextStyle(
+                      //     color: Color.fromARGB(255, 27, 29, 29),
+                      //     fontSize: 30,
+                      //   ),
+                      // ),
+                      Text(
+                        " !",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 27, 29, 29),
+                          fontSize: 30,
+                        ),
+                      ).animate(
+                        effects: [FadeEffect(), SlideEffect()],
+                      ).slideY(curve: Curves.easeIn),
                     ],
                   ),
-
-                    Image.asset("assets/Logo.png"),
-                    
-                  SizedBox(height: 30, width:30),
-                  Text("Connecting farmers to you: Uncompromised Quality, Directly Delivered.",
-                  style:TextStyle(
-                    color: Color.fromARGB(255, 123, 104, 93),
-                    fontSize: 20,
-                  ),
+                  Image.asset("assets/Logo.png")
+                      .animate(
+                          // effects: [FadeEffect(), SlideEffect()],
+                          )
+                      .slideY(curve: Curves.easeInCirc),
+                  SizedBox(height: 30, width: 30),
+                  // Padding(padding: EdgeInsets.only(left: 20)),
+                  Text(
+                    "Connecting farmers to you: Uncompromised Quality, Directly Delivered.",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 123, 104, 93),
+                      fontSize: 20,
+                    ),
+                  ).animate(
+                    effects: [FadeEffect(), SlideEffect()],
                   ),
                 ],
-                
               ),
-        ),
+            ),
+          ),
         ],
       ),
-      );
-    
+    );
   }
 }
