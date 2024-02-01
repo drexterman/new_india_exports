@@ -1,37 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_flutter/ui/navbar.dart';
-//import 'package:flutter_animate/flutter_animate.dart';
 import 'package:login_flutter/ui/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:video_player/video_player.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+//import 'package:video_player/video_player.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
 
-  //Home({super.key});
-  const Home({Key? key}) : super(key: key);
-  @override
-    _HomeState createState() => _HomeState();
-}
-class _HomeState extends State<Home> {
-    User? _currentUser;
-/////////////////////////////////////////////////////////////////////////
-  @override
-  void initState() {
-    super.initState();
-    _getCurrentUser();
-  }
+  Home({super.key});
+  //const Home({Key? key}) : super(key: key);
 
-  Future<void> _getCurrentUser() async {
-    _currentUser = FirebaseAuth.instance.currentUser;
-  }
-////////////////////////////////////////////////////////////////////////////////////////////
-Future<String> getVideoDownloadURL(String videoPath) async {
+/*Future<String> getVideoDownloadURL(String videoPath) async {
   try {
     Reference videoRef = FirebaseStorage.instance.ref().child(videoPath);
     String downloadURL = await videoRef.getDownloadURL();
@@ -40,9 +22,9 @@ Future<String> getVideoDownloadURL(String videoPath) async {
     print("Error getting video download URL: $e");
     throw e; // Handle the error according to your application's needs
   }
-}
+}*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-  Future<String> _fetchVideoDownloadURL() async {
+/*  Future<String> _fetchVideoDownloadURL() async {
     try {
       String videoPath = 'videos/MtsJpEUJ1dPVrSzoQMQgXIHvVRl2/1705736091030.mp4';
       String videoDownloadURL = await getVideoDownloadURL(videoPath);
@@ -52,44 +34,8 @@ Future<String> getVideoDownloadURL(String videoPath) async {
       // Handle the error according to your app's needs
       throw e;
     }
-  }
+  }*/
 ///////////////////////////////////////////////////////////////////////////////////////////
-  Future<void> _uploadVideo() async {
-    try {
-      if (_currentUser != null) {
-          // Check if the user's email is authorized
-          String authorizedEmail = "shubhamashwani93@gmail.com"; // replace with the authorized email
-          if (_currentUser!.email == authorizedEmail) {
-            String userId = _currentUser!.uid;
-    
-
-            // Save the download URL to Firestore or use it as needed
-            // (e.g., save it in a collection with information about the video)
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Video Uploaded'),
-              ),
-            );
-
-          } 
-          else {
-            // Show a SnackBar to indicate that the user is not authorized
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('You are not authorized to upload videos.'),
-              ),
-            );
-          }
-        } 
-      else {
-        throw Exception("User not authenticated or video not selected.");
-      }
-    } 
-    catch (e) {
-      print("Error uploading video: $e");
-    }
-  }
-//////////////////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,11 +133,15 @@ Future<String> getVideoDownloadURL(String videoPath) async {
                     Image.asset("assets/Logo.png"),
                       
                     SizedBox(height: 30, width:30),
-                    Text("Connecting farmers to you: Uncompromised Quality, Directly Delivered.",
-                      style:TextStyle(
-                        color: Color.fromARGB(255, 123, 104, 93),
-                        fontSize: 20,
+                    
+                    Padding(
+                      padding: EdgeInsets.all(16.0), // Adjust the values as needed
+                      child: Text("Connecting farmers to you: Uncompromised Quality, Directly Delivered.",
+                        style:TextStyle(
+                          color: Color.fromARGB(255, 123, 104, 93),
+                          fontSize: 20,
                         ),
+                      ),
                     ),
 
                       //String ,videoPath = 'videos/MtsJpEUJ1dPVrSzoQMQgXIHvVRl2/1705736091030.mp4';
@@ -223,7 +173,7 @@ Future<String> getVideoDownloadURL(String videoPath) async {
                         }
                       },
                   ),*/
-                  YoutubePlayer(
+                  /*YoutubePlayer(
                     controller: YoutubePlayerController(
                       initialVideoId: 'nqye02H_H6I',
                       flags: YoutubePlayerFlags(
@@ -231,7 +181,7 @@ Future<String> getVideoDownloadURL(String videoPath) async {
                         mute: false,
                       ),
                     ),
-                  ),
+                  ),*/
                   ],
                 
                 ),
@@ -321,6 +271,7 @@ class VideoDemoState extends State<VideoDemo> {
 */
 
 // ignore: must_be_immutable
+/*
 class VideoDemo extends StatefulWidget {
   VideoDemo(this.videoUrl); //: super();
  
@@ -379,3 +330,4 @@ class VideoDemoState extends State<VideoDemo> {
       );
   }
 }
+*/

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:login_flutter/ui/FruitsVegetablesPage.dart';
 import 'package:login_flutter/ui/CerealsPulsesPage.dart';
 import 'package:login_flutter/ui/OrganicFoodPage.dart';
@@ -36,17 +36,31 @@ class ProductCategoriesGrid extends StatelessWidget {
           ),
         ),
       ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 tiles in each row
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // 2 tiles in each row
+              ),
+              itemCount: categoryNames.length, // Number of tiles
+              itemBuilder: (context, index) {
+                return CategoryTile(
+                    categoryIndex: index + 1,
+                    categoryName: categoryNames[index]); // Index starts from 0
+              },
+            ),
+          ),
+          ElevatedButton(
+          onPressed: () {
+            // open Google Form
+            GoogleFormWebView();
+          },
+          child: Text('Place Order'),
         ),
-        itemCount: categoryNames.length, // Number of tiles
-        itemBuilder: (context, index) {
-          return CategoryTile(
-              categoryIndex: index + 1,
-              categoryName: categoryNames[index]); // Index starts from 0
-        },
+        ],
       ),
+      
       floatingActionButton: Stack(
         children: [
           FloatingActionButton(
@@ -56,7 +70,7 @@ class ProductCategoriesGrid extends StatelessWidget {
 
         },
             backgroundColor: Colors.blue, // Background color for the FAB
-            child: Icon(Icons.question_mark_sharp), // Icon for the FAB
+            child: Icon(Icons.chat_rounded), // Icon for the FAB
           ),
           Positioned.fill(
             child: Container(
@@ -92,7 +106,7 @@ class ProductCategoriesGrid extends StatelessWidget {
 }
 
 //uncomment the below code if you want to open a google form on tapping on enquiry button  
-/*
+
 class GoogleFormWebView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -107,7 +121,7 @@ class GoogleFormWebView extends StatelessWidget {
     );
   }
 }
-*/
+
 
 
 class CategoryTile extends StatelessWidget {
