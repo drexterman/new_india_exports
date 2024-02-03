@@ -47,6 +47,15 @@ class ProductCategoriesGrid extends StatelessWidget {
               categoryName: categoryNames[index]); // Index starts from 0
         },
       ),
+      ElevatedButton(
+          onPressed: () {
+            // open Google Form
+            GoogleFormWebView();
+          },
+          child: Text('Place Order'),
+        ),
+        ],
+      ),
       floatingActionButton: Stack(
         children: [
           FloatingActionButton(
