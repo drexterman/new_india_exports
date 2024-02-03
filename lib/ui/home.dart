@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:login_flutter/ui/navbar.dart';
 //import 'package:flutter_animate/flutter_animate.dart';
 import 'login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:video_player/video_player.dart';
 //import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
@@ -33,6 +34,7 @@ class Home extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
+                  clearUserSession();
                   FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(
                     context,
@@ -134,5 +136,9 @@ class Home extends StatelessWidget {
         ],
       ),
     );
+  }
+  Future<void> clearUserSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userToken');
   }
 }
